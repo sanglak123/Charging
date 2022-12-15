@@ -286,6 +286,112 @@ function index(props) {
           <h1>Mua mã thẻ</h1>
           <p>Các loại thẻ cào điện thoại, thẻ game trực tuyến, hỗ trợ thanh toán bằng ví điện tử, các ngân hàng của Việt Nam. Sau khi thanh toán thành công, thẻ sẽ đc trả ngay lập tức trên website và gửi vào điện chỉ email của bạn.</p>
         </div>
+        <Row>
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+
+          <Col xs={2}>
+            <div className='card_item'>
+              <img src='/img/card/the-viettel.png' alt='viettel'/>
+              <p>Thẻ Viettel</p>
+            </div>            
+          </Col>
+        </Row>
       </Container>
     </div>
   );
