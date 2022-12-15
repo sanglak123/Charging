@@ -1,0 +1,30 @@
+//abstracts
+@import "./abstracts/variables";
+@import "./abstracts/mixin";
+@import "./abstracts//animations";
+
+//base
+@import "./base/reset";
+
+//layout
+@import "./layouts/hearder";
+@import "./layouts/footer";
+@import "./layouts/productions";
+@import "./layouts//partners";
+@import "./layouts/system";
+@import "./layouts/profile";
+
+//components
+@import "./components/carousel";
+@import "./components/carouselHome";
+@import "./components/button";
+@import "./components/slideBanner";
+
+//pages
+@import "./pages/home";
+@import "./pages/login";
+@import "./pages/dashboard";
+@import "./pages/gioithieu";
+
+//themes
+@import "./themes/dark";
