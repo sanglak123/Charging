@@ -3,3 +3,58 @@
     font-family: roboto;
     src: url("/font/Roboto-Regular.ttf");
 }
+
+@font-face {
+    font-family: roboto_bold;
+    src: url("/font/Roboto-Bold.ttf");
+}
+
+@font-face {
+    font-family: anton;
+    src: url("/font/Anton-Regular.ttf");
+}
+
+//color
+$cl_dark200: #262627;
+$cl_dark100: #1c1c1c;
+$cl_black: #000000;
+$cl_red: #be0027;
+$cl_purple_100: #371777;
+$cl_purple_200: #52325d;
+$cl_purple_100: #511378;
+$cl_green: #198754;
+$cl_yellow: #e4e932;
+$cl_orange: #c57f1c;
+$cl_grd: linear-gradient(to right, rgb(142, 45, 226), rgb(74, 0, 224));
+
+//mg
+$mg5: 5px;
+$mg10: 10px;
+$mg15: 15px;
+$mg20: 20px;
+$mg25: 25px;
+$mg30: 30px;
+$mg35: 35px;
+
+//pd
+$pd5: 5px;
+$pd10: 10px;
+$pd15: 15px;
+$pd20: 20px;
+$pd25: 25px;
+$pd30: 30px;
+$pd35: 35px;
+$pd40: 40px;
+$pd45: 45px;
+$pd50: 50px;
+
+
+//font size
+$fs16: 16px;
+$fs20: 20px;
+$fs25: 25px;
+$fs30: 30px;
+$fs35: 35px;
+$fs40: 40px;
+$fs45: 45px;
+$fs50: 50px;

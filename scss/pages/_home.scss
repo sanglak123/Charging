@@ -1,0 +1,68 @@
+#home_page {
+
+    .doithecao {
+        padding: $pd50 0;
+
+        ul {
+            list-style: none;
+
+            li {
+                i {
+                    @include text_style($fs16, bold, white);
+                    margin-right: $mg20;
+                    animation-name: AutoLeftToRight;
+                    animation-duration: 0.5s;
+                    animation-iteration-count: infinite;
+                }
+            }
+        }
+
+        .btn_postcard {
+            width: 100%;
+            text-align: center;
+
+            button {
+                width: 30%;
+                background-color: $cl_green;
+                transition: 0.5s;
+
+                i {
+                    transition: 0.5s;
+                }
+
+                &:hover {
+                    color: $cl_green;              
+
+                    i {
+                        color: $cl_green;
+                        animation-name: AutoLeftToRight;
+                        animation-duration: 0.5s;
+                        animation-iteration-count: infinite;
+                    }
+                }
+            }
+        }
+    }
+
+    .bangphidoithe {
+        padding: $pd50 0;
+    }
+
+    .muathecao {
+        padding: $pd50 0;
+           .card{
+            img{
+                max-width: 130px;
+                margin: $mg10 auto;
+            }
+            .card-body{
+                button{
+                    a{
+                        text-decoration: none;
+                        color: white;
+                    }
+                }
+            }
+           }
+    }
+}

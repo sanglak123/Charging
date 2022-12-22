@@ -3,4 +3,77 @@ body {
     font-family: roboto;
     font-size: 16px;
     box-sizing: border-box;
+    background-color: $cl_dark200;
+    color: white;
+}
+
+//logo_247
+.logo_247 {
+    font-family: anton;
+    font-size: $fs30;
+    color: transparent;
+    background: conic-gradient(#D9D7F1 12%,
+            #BAABDA 12%, #BAABDA 33%,
+            #E7FBBE 33%, #E7FBBE 55%,
+            #FFCBCB 55%, #FFCBCB 70%,
+            #B5DEFF 70%, #B5DEFF 87%,
+            #F7D1BA 87%);
+    background-size: 50%;
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    animation: expand-rev 0.5s ease forwards;
+    cursor: pointer;
+
+    &:hover {
+        animation: expand 0.5s ease forwards;
+    }
+}
+.hearder_247 {
+    h1 {
+        font-family: roboto_bold;
+        @include text_style($fs35, 400, $cl_green);
+    }
+}
+
+//Text align
+.txt_center {
+    text-align: center !important;
+}
+
+//Text color
+.txt_black {
+    color: $cl_dark200 !important;
+}
+
+.txt_white {
+    color: white !important;
+}
+
+//Border
+.border_top {
+    border-top: 1px solid rgb(107, 107, 107);
+}
+
+.border_right {
+    border-right: 1px solid rgb(107, 107, 107);
+}
+
+.border_left {
+    border-left: 1px solid rgb(107, 107, 107);
+}
+
+.border_bottom {
+    border-bottom: 1px solid rgb(107, 107, 107);
+}
+
+//Bgr
+.bgr_black{
+    background-color: $cl_black!important;
+}
+.bgr_dark100{
+    background-color: $cl_dark100!important;
+}
+.bgr_dark200{
+    background-color: $cl_dark200!important;
 }
