@@ -13,6 +13,7 @@ function Clients(props) {
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const [history, setHistory] = useState([]);
+    const [clientView, setClientView] = useState("");
 
     const Clients = useSelector(AdminSelector.Clients);
 
@@ -27,13 +28,12 @@ function Clients(props) {
         } else return;
     }
 
-    const handleCancleBranch = async (client) => {
-        if (confirm(`Không xác nhận đại lý cấp ${client.lever + 1} của user: ${client.userName}`)) {
-        } else return;
-    };
-
-    const handleGetHistoryByClient = async (id) => {
-        await ApiAdmin.Clients.GetHistoryByClient(id, accessToken, setHistory);
+    const handleGetHistoryByClient = async (client) => {
+        setClientView(client);
+        const date = new Date();
+        const y = date.getFullYear();
+        const m = date.getMonth();
+        await ApiAdmin.Clients.GetHistoryByClient(client.id, m, y, accessToken, setHistory);
         setShow(true);
     }
 
@@ -43,10 +43,10 @@ function Clients(props) {
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Username</th>
-                        <th>DisplayName</th>
-                        <th>Type</th>
-                        <th>Branch</th>
+                        <th>Tên đăng nhập</th>
+                        <th>Tên hiển thị</th>
+                        <th>Tài khoản</th>
+                        <th>Đại lý</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Action</th>
@@ -58,51 +58,31 @@ function Clients(props) {
                             return (
                                 <tr key={index} className='txt_white'>
                                     <td>{index + 1}</td>
-                                    <td>{client.userName}</td>
+                                    <td className='text-danger'>{client.userName}</td>
                                     <td>{client.displayName}</td>
                                     <td>{client.admin ? "Admin" : "Client"}</td>
-                                    <td>
-                                        {
-                                            client.lever === -1 ?
-                                                <p>null</p>
-                                                :
-                                                client.lever === 0 ?
-                                                    <>
-                                                        <Button onClick={() => handleAccepBranch(client)} className='me-2' variant='outline-success'>Accep</Button>
-                                                        <Button onClick={() => handleCancleBranch(client)} variant='outline-danger'>Cancle</Button>
-                                                    </>
-                                                    :
-                                                    <p>Đại lý cấp 1</p>
-                                        }
-                                    </td>
+                                    <td className={client.lever === 0 ? "text-warning" : "text-success"}>{client.lever === 0 ? "Chờ xác nhận" : `Cấp ${client.lever}`}</td>
                                     <td>{client.email}</td>
                                     <td>{client.phone}</td>
                                     <td>
                                         <ButtonGroup aria-label="Basic example">
-                                            {
-                                                client.lever !== -1 &&
-                                                <Button variant="primary" onClick={() => handleGetHistoryByClient(client.id)}>
-                                                    View
-                                                </Button>
-                                            }
+                                            <Button variant="primary" onClick={() => handleGetHistoryByClient(client)}>View</Button>
                                             <Button onClick={() => handleResetPass(client)} variant="info">ResetPass</Button>
                                             <Button variant="danger">Delete</Button>
                                         </ButtonGroup>
-
-                                        < ViewClient
-                                            show={show}
-                                            setShow={setShow}
-                                            history={history}
-                                        />
                                     </td>
                                 </tr>
                             )
                         })
 
                     }
-
-
                 </tbody>
+                < ViewClient
+                    show={show}
+                    setShow={setShow}
+                    history={history}
+                    client={clientView}
+                />
             </Table>
 
         </div>

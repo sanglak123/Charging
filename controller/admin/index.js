@@ -164,14 +164,11 @@ export const AdminController = {
         },
         GetRevenue: async (req, res) => {
             const { id } = req.query;
+            const { y, m } = req.body;
             try {
-                const date = new Date();
-                // date.setMonth(-3);
-                const y = date.getFullYear();
-                const m = date.getMonth();
 
                 const firstDay = new Date(y, m, 1);
-                const lastDay = new Date(y, m + 1, 0);
+                const lastDay = new Date();
 
                 const list = await Cards.findAll({
                     where: {
@@ -186,7 +183,7 @@ export const AdminController = {
                     },
                     include: [{ model: Prices, include: { model: TypeCards } }]
                 });
-                return res.status(200).json({ ListCards: list })
+                return res.status(200).json({ ListCards: list, firstDay: firstDay, lastDay: lastDay })
             } catch (error) {
                 return res.status(500).json(error);
             }

@@ -172,14 +172,19 @@ export const ApiAdmin = {
                 }
             })
         },
-        GetHistoryByClient: async (id, accessToken, setHistory) => {
+        GetHistoryByClient: async (id, m, y, accessToken, setHistory) => {
             await rootApi({
                 method: "GET",
                 url: `/admin/clients/${id}`,
+                data: {
+                    m: m,
+                    y, y
+                },
                 headers: {
                     accesstoken: accessToken
                 }
             }).then((res) => {
+                console.log(res.data)
                 setHistory(res.data.ListCards)
             }).catch((err) => {
                 if (err.response) {

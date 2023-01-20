@@ -1,32 +1,36 @@
+
+
 export const handlerGetFirstMonth = () => {
     const d = new Date();
-    d.setMonth(d.getMonth() - 3);
-    const lastMonth = d.getMonth() + 1;
-    if (lastMonth < 10) {
-        return `0${lastMonth}/${d.getFullYear()}`
+    const m = d.getMonth() + 1;
+    const y = d.getFullYear();
+    if (m < 10) {
+        return `0${m}/${y}`;
     } else {
-        return `${lastMonth}/${d.getFullYear()}`
+        return `${m}/${y}`;
     }
 }
 
 export const handlerGetSecondMonth = () => {
     const d = new Date();
-    d.setMonth(d.getMonth() - 2);
-    const lastMonth = d.getMonth() + 1;
-    if (lastMonth < 10) {
-        return `0${lastMonth}/${d.getFullYear()}`
+    d.setMonth(-1);
+    const m = d.getMonth() + 1;
+    const y = d.getFullYear();
+    if (m < 10) {
+        return `0${m}/${y}`;
     } else {
-        return `${lastMonth}/${d.getFullYear()}`
+        return `${m}/${y}`;
     }
 }
 
 export const handlerGetThirdMonth = () => {
     const d = new Date();
-    d.setMonth(d.getMonth() - 2);
-    const lastMonth = d.getMonth() + 1;
-    if (lastMonth < 10) {
-        return `0${lastMonth}/${d.getFullYear()}`
+    d.setMonth(-2);
+    const m = d.getMonth() + 1;
+    const y = d.getFullYear();
+    if (m < 10) {
+        return `0${m}/${y}`;
     } else {
-        return `${lastMonth}/${d.getFullYear()}`
+        return `${m}/${y}`;
     }
 }
