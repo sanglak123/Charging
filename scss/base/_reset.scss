@@ -7,32 +7,104 @@ body {
     color: white;
 }
 
-//logo_247
-.logo_247 {
-    font-family: anton;
-    font-size: $fs30;
-    color: transparent;
-    background: conic-gradient(#D9D7F1 12%,
-            #BAABDA 12%, #BAABDA 33%,
-            #E7FBBE 33%, #E7FBBE 55%,
-            #FFCBCB 55%, #FFCBCB 70%,
-            #B5DEFF 70%, #B5DEFF 87%,
-            #F7D1BA 87%);
-    background-size: 50%;
-    background-clip: text;
-    -webkit-background-clip: text;
+//btn to top
+.scroll-to-top {
+    position: fixed;
+    width: 100%;
+    background-color: $cl_black !important;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
 
-    animation: expand-rev 0.5s ease forwards;
-    cursor: pointer;
-
-    &:hover {
-        animation: expand 0.5s ease forwards;
+    a {
+        color: white !important;
     }
 }
+
+#btn_scroll {
+    position: fixed;
+    bottom: 0;
+    transform: translate(200%, -400%);
+    right: 0;
+    opacity: 0;
+    width: 55px;
+    height: 55px;
+
+    transition: 0.5s;
+    z-index: 999;
+}
+
+//Button
+.btnShow {
+    opacity: 1 !important;
+    transform: translate(-30%, -400%) !important;
+
+}
+
+.btn_editPrice {
+    cursor: pointer;
+    margin-left: $mg10;
+    color: $cl_green;
+    transition: 0.5s;
+    &:hover{
+        color: white;
+    }
+}
+
+//logo_247
+#logo_247 {
+    text-align: center;
+
+    h1 {
+        text-align: center;
+        font-family: anton;
+        font-size: $fs30;
+        letter-spacing: 2px;
+        margin: 0;
+        padding: 0;
+        color: transparent;
+        background: conic-gradient(#D9D7F1 12%,
+                #BAABDA 12%, #BAABDA 33%,
+                #E7FBBE 33%, #E7FBBE 55%,
+                #FFCBCB 55%, #FFCBCB 70%,
+                #B5DEFF 70%, #B5DEFF 87%,
+                #F7D1BA 87%);
+        background-size: 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+
+        animation: expand-rev 0.5s ease forwards;
+        cursor: pointer;
+
+        &:hover {
+            animation: expand 0.5s ease forwards;
+        }
+    }
+
+    .website {
+        text-align: center;
+        @include text_style($fs16 - 3, normal, white);
+        font-style: italic;
+        letter-spacing: 3px;
+        margin: 0;
+        padding: 0;
+
+    }
+}
+
 .hearder_247 {
     h1 {
         font-family: roboto_bold;
         @include text_style($fs35, 400, $cl_green);
+    }
+}
+
+.footer_hearder {
+    h4 {
+        text-decoration: underline;
+        font-family: roboto_bold;
+        @include text_style($fs25, 400, white);
     }
 }
 
@@ -48,6 +120,18 @@ body {
 
 .txt_white {
     color: white !important;
+}
+
+.txt_red {
+    color: $cl_red !important;
+}
+
+.txt_green {
+    color: $cl_green !important;
+}
+
+.txt_dark {
+    color: rgb(87, 86, 86) !important;
 }
 
 //Border
@@ -68,12 +152,18 @@ body {
 }
 
 //Bgr
-.bgr_black{
-    background-color: $cl_black!important;
+.bgr_black {
+    background-color: $cl_black !important;
 }
-.bgr_dark100{
-    background-color: $cl_dark100!important;
+
+.bgr_dark100 {
+    background-color: $cl_dark100 !important;
 }
-.bgr_dark200{
-    background-color: $cl_dark200!important;
+
+.bgr_dark200 {
+    background-color: $cl_dark200 !important;
+}
+
+.bgr_green {
+    background-color: $cl_green !important;
 }

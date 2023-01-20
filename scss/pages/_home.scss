@@ -31,7 +31,7 @@
                 }
 
                 &:hover {
-                    color: $cl_green;              
+                    color: $cl_green;
 
                     i {
                         color: $cl_green;
@@ -50,19 +50,28 @@
 
     .muathecao {
         padding: $pd50 0;
-           .card{
-            img{
+
+        .card {
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            transition: 0.5s;
+
+            &:hover {
+                transform: scale(1.1);                
+            }
+
+            img {
                 max-width: 130px;
                 margin: $mg10 auto;
             }
-            .card-body{
-                button{
-                    a{
+
+            .card-body {
+                button {
+                    a {
                         text-decoration: none;
                         color: white;
                     }
                 }
             }
-           }
+        }
     }
 }

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
@@ -9,25 +10,37 @@ function ClientRegister(props) {
     const router = useRouter();
 
     const [userName, setUserName] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [phone, setPhone] = useState("");
+    const [displayName, setDisplayName] = useState("");
+    const [pass1, setPass1] = useState("");
     const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
+    const [phone, setPhone] = useState("");
+    const [admin, setAdmin] = useState(false);
+    const [key, setKey] = useState("");
 
     const handleRegister = async () => {
-        await ApiClients.Authen.Register(userName, fullName, phone, email, pass, router);
+        await ApiClients.Authen.Register(userName, displayName, phone, email, pass1, router, admin, key);
     };
 
     return (
-        <div id='client_register'>
-            <div className='register_content'>
-                <div className='register_hearder'>
-                    <h2>Login</h2>
-                    <h1>DOITHE247</h1>
+        <div id='client_login'>
+            <div className='login_content'>
+                <div className='login_hearder'>
+                    <h1>Đăng Ký Tài Khoản</h1>
                 </div>
 
-                <div className='register_item d-flex'>
-                    <p className='mr-3'>Tên Đăng Nhập:</p>
+                <div className='login_item'>
+                    <InputGroup className="mb-3">
+                        <Form.Label>Admin</Form.Label>
+                        <Form.Check
+                            type={"checkbox"}
+                            checked={admin}
+                            onChange={() => setAdmin(!admin)}
+                        />
+                    </InputGroup>
+                </div>
+
+                <div className='login_item d-flex'>
+                    <p className='mr-3'>Tên đăng nhập:</p>
                     <InputGroup className="mb-3">
                         <Form.Control
                             onChange={(e) => setUserName(e.target.value)}
@@ -40,37 +53,39 @@ function ClientRegister(props) {
                     </InputGroup>
                 </div>
 
-                <div className='register_item d-flex'>
-                    <p className='mr-3'>Họ Và Tên:</p>
+                <div className='login_item d-flex'>
+                    <p className='mr-3'>Tên hiển thị:</p>
                     <InputGroup className="mb-3">
                         <Form.Control
-                            onChange={(e) => setFullName(e.target.value)}
-                            value={fullName}
-                            placeholder="Họ và tên"
-                            aria-label="Fullname"
-                            aria-describedby="basic-fullname"
+                            onChange={(e) => setDisplayName(e.target.value)}
+                            value={displayName}
+                            placeholder="Tên hiển thị"
+                            aria-label="Displayname"
+                            aria-describedby="basic-displayName"
                         />
                     </InputGroup>
                 </div>
 
-                <div className='register_item d-flex'>
-                    <p className='mr-3'>Số Điện Thoại:</p>
+                <div className='login_item d-flex'>
+                    <p className='mr-3'>Mật khẩu:</p>
                     <InputGroup className="mb-3">
                         <Form.Control
-                            onChange={(e) => setPhone(e.target.value)}
-                            value={phone}
-                            placeholder="Số điện thoại"
-                            aria-label="Phone"
-                            aria-describedby="basic-phone"
+                            onChange={(e) => setPass1(e.target.value)}
+                            value={pass1}
+                            type={"password"}
+                            placeholder="Mật khẩu"
+                            aria-label="Pass"
+                            aria-describedby="basic-pass"
                         />
                     </InputGroup>
                 </div>
 
-                <div className='register_item d-flex'>
-                    <p className='mr-3'>Địa Chỉ Email:</p>
+                <div className='login_item d-flex'>
+                    <p className='mr-3'>Email:</p>
                     <InputGroup className="mb-3">
                         <Form.Control
                             onChange={(e) => setEmail(e.target.value)}
+                            type={"email"}
                             value={email}
                             placeholder="Email"
                             aria-label="Email"
@@ -79,27 +94,45 @@ function ClientRegister(props) {
                     </InputGroup>
                 </div>
 
-                <div className='register_item d-flex'>
-                    <p className='mr-3'>Mật Khẩu:</p>
+                <div className='login_item d-flex'>
+                    <p className='mr-3'>Điện thoại:</p>
                     <InputGroup className="mb-3">
                         <Form.Control
-                            onChange={(e) => setPass(e.target.value)}
-                            value={pass}
-                            type='password'
-                            placeholder="Mật khẩu"
-                            aria-label="Pass"
-                            aria-describedby="basic-pass"
+                            onChange={(e) => setPhone(e.target.value)}
+                            type={'tel'}
+                            value={phone}
+                            placeholder="Điện thoại"
+                            aria-label="Phone"
+                            aria-describedby="basic-phone"
                         />
                     </InputGroup>
                 </div>
 
-                <div className='register_item d-flex'>
-                    <Button onClick={() => handleRegister()} className='w-100'>Đăng Ký</Button>
+                {
+                    admin &&
+                    <div className='login_item d-flex'>
+                        <p className='mr-3'>Key admin:</p>
+                        <InputGroup className="mb-3">
+                            <Form.Control
+                                onChange={(e) => setKey(e.target.value)}
+                                type={'tel'}
+                                value={key}
+                                placeholder="Key Admin"
+                                aria-label="Key"
+                                aria-describedby="basic-key"
+                            />
+                        </InputGroup>
+                    </div>
+                }
+
+                <div className='login_item d-flex justify-content-end align-items-center mt-4'>
+                    <Link href={"/"} className='me-2 btn btn_danger'>Hủy</Link>
+                    <Button onClick={() => handleRegister()} className="btn_success">Đăng ký</Button>
+
                 </div>
-
             </div>
-
         </div>
+
     );
 }
 

@@ -1,0 +1,93 @@
+#muathecao {
+    .note {}
+
+    .muathecao_content {
+        .loaithe {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+
+            .img_card {
+                display: inline-block;
+                max-width: 7vw;
+                border: 1px solid red;
+                text-align: center;
+                margin: $mg10;
+                padding: $pd10;
+                border-radius: 10px;
+                background-color: white;
+                cursor: pointer;
+
+                img {
+                    max-width: 100%;
+                }
+            }
+        }
+
+        .card_value {
+            .value_item {
+                display: inline-block;
+                border: 1px solid white;
+                margin: $mg10;
+                padding: $pd10 $pd20;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: 0.5s;
+
+                &:hover {
+                    background-color: $cl_green;
+                    color: $cl_dark300;
+                }
+
+                p {
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+        }
+
+        .store {
+            width: 40%;
+            border: 1px solid white;
+            border-radius: 10px;
+            overflow: hidden;
+
+            .store_hearder {
+                padding: $pd10;
+                border-bottom: 1px solid white;
+                background-color: $cl_dark100;
+
+                p {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+
+            .store_body {
+                padding: $pd20;
+
+                .store_content {
+                    .card_item {
+                        &:hover {
+                            background-color: $cl_dark100;
+                        }
+
+                        .card_telco {}
+
+                        .card_count {
+                            border: 1px solid white;
+
+                            .btn_count {
+
+                                button {
+                                    padding: $pd5;
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

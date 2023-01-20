@@ -1,0 +1,73 @@
+#dashboard {
+    padding: $pd30;
+
+    .dashboard_controller {
+        .dashboard_controller_content {
+            span {
+                font-weight: 100;
+                font-size: $fs16 - 3;
+            }
+            .logo{
+                margin-bottom: $mg30 + 20;
+            }
+
+            .menu {
+                .menu_item {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    cursor: pointer;
+                    margin: $mg10 0;
+
+                    &:hover {
+                        color: $cl_green;
+                    }
+
+                    i {
+                        margin-right: $mg10;
+                        transition: 0.5s;
+                    }
+
+                    p {
+                        margin: 0;
+                        padding: 0;
+                        transition: 0.5s;
+                    }
+                }
+            }
+
+
+        }
+
+    }
+
+    .dashboard_views {
+        background-color: $cl_dark100;
+        width: 100%;
+
+        .views_bar {
+            padding: $pd20 - 5;
+            background-color: $cl_dark300;
+            border-radius: 7px 7px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            p,
+            a {
+                margin: 0;
+                padding: 0;
+                text-decoration: none;
+                color: white;
+
+                &:hover {
+                    color: $cl_dark200;
+                }
+            }
+        }
+
+        .views_item {
+            padding: $pd20;
+        }
+    }
+}

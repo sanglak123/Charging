@@ -1,0 +1,80 @@
+#admin_register {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+
+    .register_content {
+        position: absolute;
+        width: 40%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $cl_dark100;
+        padding: $pd50;
+        border: 1px solid white;
+        border-radius: 10px;
+
+        .register_hearder {
+            font-family: roboto_bold;
+            text-align: center;
+            margin-bottom: $mg30;
+        }
+
+        .register_item {
+            p {
+                min-width: 30%;
+            }
+        }
+
+        .register_controller {}
+    }
+}
+
+//Responsive
+@media only screen and (max-width: 1400px) {
+    #admin_register {
+        .register_content {
+            width: 50%;
+        }
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    #admin_register {
+        .register_content {
+            width: 60%;
+        }
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #admin_register {
+        .register_content {
+            width: 70%;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #admin_register {
+        .register_content {
+            width: 80%;
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    #admin_register {
+        .register_content {
+            width: 90%;
+        }
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    #admin_register {
+        .register_content {
+            width: 100%;
+        }
+    }
+}

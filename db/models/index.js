@@ -9,10 +9,12 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
-const ListPrices = require("./listprices");
+const BankOfUsers = require("./bankofusers");
 const Users = require("./users");
+const Banks = require("./banks");
 const Cards = require("./cards");
-const PostCards = require("./postcards");
+const TypeCards = require("./typecards");
+const Prices = require("./prices");
 const RefreshTokens = require("./refreshtokens");
 
 let sequelize;
@@ -22,10 +24,12 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-db.ListPrices = ListPrices(sequelize, Sequelize);
+db.BankOfUsers = BankOfUsers(sequelize, Sequelize);
 db.Users = Users(sequelize, Sequelize);
+db.Banks = Banks(sequelize, Sequelize);
+db.TypeCards = TypeCards(sequelize, Sequelize);
 db.Cards = Cards(sequelize, Sequelize);
-db.PostCards = PostCards(sequelize, Sequelize);
+db.Prices = Prices(sequelize, Sequelize);
 db.RefreshTokens = RefreshTokens(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {

@@ -11,18 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasOne(models.RefreshTokens,{foreignKey:"idUser"});
-      this.hasMany(models.PostCards, {foreignKey:"idUser"});
+      this.hasMany(models.BankOfUsers, { foreignKey: "idUser" });
+      this.hasMany(models.Cards, { foreignKey: "idUser" });
     }
   }
   Users.init({
     userName: DataTypes.STRING,
-    pass: DataTypes.STRING,
-    fullName: DataTypes.STRING,
+    displayName: DataTypes.STRING,
+    pass1: DataTypes.STRING,
+    pass2: DataTypes.STRING,
     email: DataTypes.STRING,
     phone: DataTypes.STRING,
+    partnerId: DataTypes.STRING,
+    partnerKey: DataTypes.STRING,
+    walletNumber: DataTypes.STRING,
+    surplus: DataTypes.STRING,
     admin: DataTypes.BOOLEAN,
-    surplus: DataTypes.STRING
+    activeAdmin: DataTypes.BOOLEAN,
+    lever: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Users',

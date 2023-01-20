@@ -1,0 +1,57 @@
+#footer {
+
+    #footer_main {
+        padding: $pd50 0 $pd25 0;
+
+        .footer_item {
+            a {
+                transition: 0.5s;
+            }
+
+        
+
+            .item {
+                ul {
+                    padding: 0;
+
+                    li {
+                        list-style: none;
+
+                        a {
+                            text-decoration: none;
+                            color: white;
+
+                            i {
+                                margin-right: $mg20;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .quick_link {
+                ul {
+                    li {
+                        &:hover {
+                            a {
+                                color: $cl_green !important;
+
+                                i {
+                                    animation-name: AutoLeftToRight;
+                                    animation-duration: 0.5s;
+                                    animation-iteration-count: infinite;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #footer_bottom {
+        padding: $pd10 0;        
+    }
+
+
+}

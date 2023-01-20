@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
@@ -8,11 +9,14 @@ import { LoginSuccess } from '../../redux/slice/ClientSlice';
 function ClientLogin(props) {
     const dispath = useDispatch();
     const router = useRouter();
+
     const [userName, setUserName] = useState("");
-    const [pass, setPass] = useState("");
+    const [pass1, setPass1] = useState("");
+
+    const [ghiNho, setGhiNho] = useState(false);
 
     const handleLogin = async () => {
-        await ApiClients.Authen.Login(userName, pass, dispath, LoginSuccess, router);
+        await ApiClients.Authen.Login(userName, pass1, dispath, LoginSuccess, router);
     };
 
     return (
@@ -40,8 +44,8 @@ function ClientLogin(props) {
                     <p className='mr-3'>Mật khẩu:</p>
                     <InputGroup className="mb-3">
                         <Form.Control
-                            onChange={(e) => setPass(e.target.value)}
-                            value={pass}
+                            onChange={(e) => setPass1(e.target.value)}
+                            value={pass1}
                             type={"password"}
                             placeholder="Mật khẩu"
                             aria-label="Pass"
@@ -50,12 +54,24 @@ function ClientLogin(props) {
                     </InputGroup>
                 </div>
 
-                <div className='register_item d-flex'>
-                    <Button onClick={() => handleLogin()} className='w-100'>Đăng Nhập</Button>
+                <div className='login_item d-flex justify-content-end align-items-center'>
+                    <Link className='me-3' href={"/quenmatkhau"}>Quên mật khẩu?</Link>
+                    <Form.Check
+                        checked={ghiNho}
+                        onClick={() => setGhiNho(!ghiNho)}
+                        type={"radio"}
+                        label={"Ghi nhớ?"}
+                        id="ghinho"
+                    />
                 </div>
 
+                <div className='login_item d-flex justify-content-end align-items-center mt-4'>
+                    <Link href={"/register"} className='me-2 btn btn-primary' variant="primary">Đăng ký</Link>
+                    <Button onClick={() => handleLogin()} variant="success">Đăng nhập</Button>
+                </div>
             </div>
         </div>
+
     );
 }
 

@@ -1,0 +1,14 @@
+#changecard {
+    ul {
+        list-style: none;
+
+        li {
+            i {
+                margin-right: $mg10;
+                animation-name: AutoLeftToRight;
+                animation-duration: 0.5s;
+                animation-iteration-count: infinite;
+            }
+        }
+    }
+}

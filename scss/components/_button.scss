@@ -1,0 +1,59 @@
+.btn_authen {
+    margin: 0 $mg5;
+    width: 120px;
+    border: 1px solid white;
+    padding: $pd10;
+    text-align: center;
+    border-radius: 7px;
+    transform: scale(0.9);
+    transition: 0.5s;
+
+    &:hover {
+        background-color: $cl_black;
+        color: white !important;
+        transform: scale(1);
+    }
+}
+
+.btn_success {
+    margin: 0 $mg5 - 3;
+    width: 120px;
+    border: 1px solid white;
+    padding: $pd10;
+    text-align: center;
+    border-radius: 7px;
+    transform: scale(0.9);
+    transition: 0.5s;
+    background-color: transparent;
+    color: $cl_green;
+
+    &:hover {
+        background-color: $cl_green;
+        color: white !important;
+        transform: scale(1);
+    }
+}
+
+.btn_danger {
+    margin: 0 $mg5 - 3;
+    width: 120px;
+    border: 1px solid white;
+    padding: $pd10;
+    text-align: center;
+    border-radius: 7px;
+    transform: scale(0.9);
+    transition: 0.5s;
+    background-color: transparent;
+    color: white;
+
+    &:hover {
+        background-color: $cl_red;
+        color: white !important;
+        transform: scale(1);
+    }
+}
+.btn_feesCard{
+    min-width: 100px;
+    border-radius: 0;
+    margin-bottom: $mg10;
+}

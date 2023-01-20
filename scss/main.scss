@@ -11,10 +11,17 @@
 @import "./layouts/footer";
 
 //components
-
+@import "./components/button";
+@import "./components/publicDashboard";
 
 //pages
 @import "./pages/home";
 @import "./pages/register";
+@import "./pages/buycard";
+@import "./pages/changecard";
+@import "./pages/login";
+@import "./pages/dashboard";
+
+@import "./pages/adminRegister";
 
 //themes

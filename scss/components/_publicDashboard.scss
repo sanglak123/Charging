@@ -1,0 +1,16 @@
+#public_dashboard {
+    .public_hearder {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        .hearder_item {
+            border: 1px solid white;
+            min-width: 200px;
+            text-align: center;
+            padding: $pd20;
+            border-radius: 7px;
+            background-color: $cl_dark200;
+        }
+    }
+}

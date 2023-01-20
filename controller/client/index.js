@@ -1,26 +1,31 @@
+import { Op } from "sequelize";
 import { CreateAccessToken, CreateRefreshToken } from "../token";
+const uuid = require("uuid");
+const CryptoJS = require("crypto-js");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const bcryptjs = require("bcryptjs");
-const { ListPrices, Users, RefreshTokens } = require("../../db/models");
+const { Users, RefreshTokens, Cards, Prices, TypeCards } = require("../../db/models");
 
 export const ClientController = {
     Authen: {
         Login: async (req, res) => {
-            const { userName, pass } = req.body;
+            const { userName, pass1 } = req.body;
             try {
-                const Client = await Users.findOne({
+                const user = await Users.findOne({
                     where: {
                         userName: userName
                     }
                 });
-                if (Client) {
-                    if (bcryptjs.compareSync(pass, Client.pass)) {
-                        const newAccessToken = CreateAccessToken(Client);
-                        const newRefreshToken = CreateRefreshToken(Client);
+                if (user) {
+                    if (bcryptjs.compareSync(pass1, user.pass1)) {
+                        const newAccessToken = CreateAccessToken(user);
+                        const newRefreshToken = CreateRefreshToken(user);
 
                         const oldRefreshToken = await RefreshTokens.findOne({
                             where: {
-                                idUser: Client.id
+                                idUser: user.id
                             }
                         });
 
@@ -35,11 +40,11 @@ export const ClientController = {
                                 sameSite: "strict",
                                 maxAge: 60 * 1000 * 60 * 24
                             });
-                            return res.status(200).json({ Client: Client, accessToken: newAccessToken });
+                            return res.status(200).json({ Client: user, accessToken: newAccessToken });
                         } else {
                             const token = await RefreshTokens.create({
                                 refreshToken: newRefreshToken,
-                                idUser: Client.id
+                                idUser: user.id
                             });
 
                             res.cookie("refreshToken", newRefreshToken, {
@@ -49,7 +54,7 @@ export const ClientController = {
                                 sameSite: "strict",
                                 maxAge: 60 * 1000 * 60 * 24
                             });
-                            return res.status(200).json({ Client: Client, accessToken: newAccessToken });
+                            return res.status(200).json({ Client: user, accessToken: newAccessToken });
                         }
 
                     } else {
@@ -71,93 +76,237 @@ export const ClientController = {
             }
         },
         Register: async (req, res) => {
-            const { userName, fullName, phone, email, pass } = req.body;
             try {
+                const { userName, displayName, phone, email, pass1 } = req.body;
+
                 const oldUser = await Users.findOne({
                     where: {
                         userName: userName
                     }
                 });
                 if (oldUser) {
-                    return res.status(400).json({ error: "Tên đăng nhập đã tồn tại." })
+                    return res.status(400).json({ error: "Tên đăng nhập đã tồn tại!" })
                 } else {
                     const salt = bcryptjs.genSaltSync(10);
-                    const newpass = bcryptjs.hashSync(pass, salt);
-                    const newClient = await Users.create({
+                    const newPass = bcryptjs.hashSync(pass1, salt);
+                    const partner_id = uuid.v4({ userName: userName }).replace(/\-/g, '').toString();
+                    const partnerKey = uuid.v4({ userName: userName, email: email }).replace(/\-/g, '').toString();
+                    const walletNumber = new Date().getTime().toString();
+                    const newUsser = await Users.create({
                         userName: userName,
-                        fullName: fullName,
-                        pass: newpass,
-                        phone: phone,
+                        displayName: displayName,
+                        pass1: newPass,
                         email: email,
-                        admin: false,
-                        surplus: 0
+                        phone: phone,
+                        partnerId: partner_id,
+                        partnerKey: partnerKey,
+                        walletNumber: walletNumber,
+                        surplus: "0",
+                        admin: false
                     });
-                    return res.status(201).json({ Client: newClient, mess: "Đăng ký thành công!" });
+                    return res.status(200).json({ mess: "Đăng ký thành công!", user: newUsser });
+                }
+
+            } catch (error) {
+                return res.status(500).json(error);
+            }
+        }
+    },
+    Card: {
+        PostCard: async (req, res) => {
+            const { telco, code, seri, value } = req.body;
+            const { id } = req.query;
+            try {
+                const request_id = uuid.v4({ serial: seri }).replace(/\-/g, '').toString();
+                const sign = CryptoJS.MD5(process.env.PARTNER_KEY + code + seri).toString();
+                //User post card
+                const client = await Users.findOne({
+                    where: {
+                        id: id
+                    }
+                });
+                //Old card
+                const oldCard = await PostCards.findOne({
+                    where: {
+                        [Op.and]: [
+                            { telco: telco },
+                            { code: code },
+                            { seri: seri },
+                            { value: value }
+                        ]
+                    }
+                });
+
+                //Price
+                const priceCard = await ListPrices.findOne({
+                    where: {
+                        [Op.and]: [
+                            { telco: telco },
+                            { value: value }
+                        ]
+                    }
+                });
+
+                if (oldCard) {
+                    return res.status(400).json({ error: "Thẻ đã tồn tại trên hệ thống!" })
+                } else {
+                    //Thêm mới post                     
+                    const postcard = await PostCards.create({
+                        telco: telco,
+                        code: code,
+                        seri: seri,
+                        value: value,
+                        amount: Number(value) - (Number(value) * Number(priceCard.fees)) / 100,
+                        fees: priceCard.fees,
+                        sign: sign,
+                        declared_value: value,
+                        message: "Wait",
+                        request_id: request_id,
+                        idUser: client.id
+                    });
+
+                    //Call API
+                    await axios({
+                        method: "POST",
+                        url: process.env.DOMAIN_POSTCARD,
+                        data: {
+                            telco: telco,
+                            code: code,
+                            serial: seri,
+                            amount: value,
+                            request_id: request_id,
+                            partner_id: process.env.PARTNER_ID,
+                            sign: sign,
+                            command: "charging"
+                        }
+                    }).then((responsive) => {
+                        return res.status(200).json({ Postcard: postcard, status: responsive.data.status, mess: "Thẻ đang được xử lý vui lòng chờ trong giây lát" })
+                    }).catch((err) => {
+                        return res.status(500).json(err)
+                    })
+                }
+
+            } catch (error) {
+                return res.status(500).json(error);
+            }
+        },
+        CheckCard: async (req, res) => {
+            const { telco, code, seri, value, idUser } = req.body;
+            try {
+                const client = await Users.findOne({
+                    where: {
+                        id: idUser
+                    }
+                });
+
+                const postcard = await PostCards.findOne({
+                    where: {
+                        [Op.and]: [
+                            { idUser: client.id },
+                            { code: code },
+                            { seri: seri }
+                        ]
+                    }
+                });
+
+                if (postcard.message === "Wait") {
+                    await axios({
+                        method: "POST",
+                        url: process.env.DOMAIN_POSTCARD,
+                        data: {
+                            telco: telco,
+                            code: code,
+                            serial: seri,
+                            amount: value,
+                            request_id: postcard.request_id,
+                            partner_id: process.env.PARTNER_ID,
+                            sign: postcard.sign,
+                            command: "check"
+                        }
+                    }).then(async (responsive) => {
+
+                        switch (responsive.data.status) {
+                            case 1: {
+                                client.surplus = Number(client.surplus) + Number(postcard.amount);
+                                await client.save();
+                                postcard.message = "Success";
+                                postcard.status = 1;
+                                await postcard.save();
+                                return res.status(200).json({ status: 1, mess: "Đổi thẻ thành công!", PostCard: postcard })
+                            }
+                            case 2: {
+                                client.surplus = client.surplus + (amount / 2);
+                                await client.save();
+                                postcard.message = "Penanty";
+                                postcard.status = 2;
+                                postcard.amount = postcard.amount / 2;
+                                await postcard.save();
+                                return res.status(200).json({ status: 2, mess: "Đổi thẻ thành công - Sai mệnh giá", PostCard: postcard })
+                            }
+                            case 3: {
+                                postcard.message = "Error";
+                                postcard.status = 3;
+                                postcard.amount = 0;
+                                await postcard.save();
+                                return res.status(200).json({ status: 3, mess: "Thẻ lỗi" })
+                            }
+                            case 4: {
+                                postcard.destroy();
+                                return res.status(200).json({ status: 4, mess: "Hệ thống bảo trì" })
+                            }
+                            case 99: {
+                                return res.status(200).json({ status: 99 })
+                            }
+                            default: {
+                                postcard.message = "Error";
+                                postcard.status = 3;
+                                postcard.amount = 0;
+                                await postcard.save();
+                                return res.status(400).json({ error: "Thẻ lỗi" })
+                            }
+                        }
+                    }).catch((err) => {
+                        return res.status(500).json(err)
+                    })
+                } else {
+                    return res.status(404).json({ error: postcard.message })
                 }
             } catch (error) {
                 return res.status(500).json(error);
             }
         },
-        Logout: async (req, res) => {
-        }
-    },
-    Price: {
-        LayGiaTayThe: async (req, res) => {
+        GetHistoryChangeCard: async (req, res) => {
+            const { id } = req.query;
             try {
-                const list = await ListPrices.findAll();
-                const VIETTEL = list.filter(card => card.telco === "VIETTEL");
-                const VINAPHONE = list.filter(card => card.telco === "VINAPHONE");
-                const MOBIFONE = list.filter(card => card.telco === "MOBIFONE");
-                const VNMOBI = list.filter(card => card.telco === "VNMOBI");
-                const ZING = list.filter(card => card.telco === "ZING");
-                const GATE = list.filter(card => card.telco === "GATE");
-                const GARENA = list.filter(card => card.telco === "GARENA");
-                const VCOIN = list.filter(card => card.telco === "VCOIN");
-
-                const ListCard = [
-                    {
-                        name: "VIETTEL",
-                        value: ["10.000", "20.000", "30.000", "50.000", "100.000", "200.000", "300.000", "500.000", "1.000.000"],
-                        list: VIETTEL
+                const list = await Cards.findAll({
+                    where: {
+                        [Op.and]: [
+                            { idUser: id },
+                            { command: "change" }
+                        ]
                     },
-                    {
-                        name: "VINAPHONE",
-                        value: ["10.000", "20.000", "30.000", "50.000", "100.000", "200.000", "300.000", "500.000"],
-                        list: VINAPHONE
-                    },
-                    {
-                        name: "VNMOBI",
-                        value: ["10.000", "20.000", "30.000", "50.000", "100.000", "200.000", "300.000", "500.000"],
-                        list: VNMOBI
-                    },
-                    {
-                        name: "MOBIFONE",
-                        value: ["10.000", "20.000", "30.000", "50.000", "100.000", "200.000", "300.000", "500.000"],
-                        list: MOBIFONE
-                    },
-                    {
-                        name: "ZING",
-                        value: ["10.000", "20.000", "30.000", "50.000", "100.000", "200.000", "300.000", "500.000", "1.000.000"],
-                        list: ZING
-                    },
-                    {
-                        name: "GATE",
-                        value: ["10.000", "20.000", "50.000", "100.000", "200.000", "500.000", "1.000.000"],
-                        list: GATE
-                    },
-                    {
-                        name: "GARENA",
-                        value: ["20.000", "50.000", "100.000", "200.000", "500.000"],
-                        list: GARENA
-                    },
-                    {
-                        name: "VCOIN",
-                        value: ["10.000", "20.000", "50.000", "100.000", "200.000", "300.000", "500.000", "1.000.000"],
-                        list: VCOIN
-                    },
-                ]
-
-                return res.status(200).json({ ListPrices: ListCard });
+                    order: [["id", "desc"]],
+                    include: { model: Prices, include: { model: TypeCards } }
+                });
+                return res.status(200).json({ HistoryChangeCard: list })
+            } catch (error) {
+                return res.status(500).json(error);
+            }
+        },
+        DeleteCard: async (req, res) => {
+            const { idCard } = req.query;
+            try {
+                const card = await Cards.findOne({
+                    where: {
+                        id: idCard
+                    }
+                });
+                if (card) {
+                    await card.destroy();
+                    return res.status(200).json({ mess: "Delete success!" })
+                } else {
+                    return res.status(404).json({ error: "Card is not found!" });
+                }
             } catch (error) {
                 return res.status(500).json(error);
             }

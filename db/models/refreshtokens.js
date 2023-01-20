@@ -11,12 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Users, { foreignKey: "idUser" });
     }
   }
   RefreshTokens.init({
-    refreshToken: DataTypes.STRING,
-    idUser: DataTypes.INTEGER
+    idUser: DataTypes.INTEGER,
+    refreshToken: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'RefreshTokens',
